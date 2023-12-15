@@ -237,7 +237,7 @@ const GeoRasterLayer: (new (options: GeoRasterLayerOptions) => any) & typeof L.C
     L.GridLayer.prototype.onAdd.call(this, map);
   },
 
-  getRasters: function (options: GetRasterOptions) {
+  getRasters: async function (options: GetRasterOptions) {
     const {
       innerTileTopLeftPoint,
       heightOfSampleInScreenPixels,
@@ -655,6 +655,7 @@ const GeoRasterLayer: (new (options: GeoRasterLayerOptions) => any) & typeof L.C
 
           await this.checkIfYCbCr;
 
+          setTimeout(() => {
           for (let h = 0; h < numberOfSamplesDown; h++) {
             const yCenterInMapPixels = yTopOfInnerTile + (h + 0.5) * heightOfSampleInScreenPixels;
             const latWestPoint = L.point(xLeftOfInnerTile, yCenterInMapPixels);
@@ -736,6 +737,8 @@ const GeoRasterLayer: (new (options: GeoRasterLayerOptions) => any) & typeof L.C
               }
             }
           }
+          },10);
+
 
           if (this.mask) {
             if (inSimpleCRS) {
